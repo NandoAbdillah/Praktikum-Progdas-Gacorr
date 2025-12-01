@@ -2,6 +2,19 @@
 
 Halo! Selamat datang di repository **Praktikum Pemrograman Dasar Semester 1** yang dikerjakan oleh **Kelompok 5 – TI G 2025**.
 Kelompok kami pastinya **gacorr**, **josjis**, **rajin menabung**, dan tentunya **berbakti pada orang tua** 
+---
+
+## 👥 **Anggota Kelompok 5 – TI G 2025**
+
+* **25051204008 – Naufal Wicaksono**
+* **25051204011 – Albani Rasya Surya Saputra**
+* **25051204012 – Nando Abdillah Salam**
+* **25051204059 – Wandy Jesaya Simanjuntak**
+  
+---
+
+Kalau mau versi yang lebih *stylish*, lebih formal, atau pakai bullet emoji lainnya, tinggal bilang aja!
+
 
 Project ini adalah implementasi materi Progdas Semester 1 seperti **kondisional, perulangan, array, fungsi, serta file handling**, yang kami kemas menjadi sebuah mini–aplikasi bernama:
 
@@ -202,7 +215,7 @@ Berisi fitur:
 
 ---
 
-# 📌 **Catatan Kelompok**
+# 📌 **Catatan**
 
 * Aplikasi ini menggunakan **file handling (fstream)** sebagai database sederhana.
 * Semua fitur dibuat sebagai implementasi penuh materi Progdas Semester 1.
@@ -210,8 +223,4 @@ Berisi fitur:
 
 ---
 
-Kalau ada bug… itu bukan bug. Itu *fitur mendadak* 😎🔥
 
----
-
-Kalau kamu mau, bisa kubuatkan **versi markdown lengkap plus emoji**, atau **versi formal untuk laporan**.
