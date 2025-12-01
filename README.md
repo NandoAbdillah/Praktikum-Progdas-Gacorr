@@ -1,7 +1,3 @@
-Berikut README yang **asik, santai, tapi tetap rapi dan enak dibaca** untuk project kelompokmu. Sudah aku kemas biar “gacorr, josjis”, dan cocok untuk laporan praktikum Progdas 🚀
-
----
-
 # 🎫 Praktikum Progdas Gacorr – Aplikasi Tiketing Online
 
 Halo! Selamat datang di repository **Praktikum Pemrograman Dasar Semester 1** yang dikerjakan oleh **Kelompok 5 – TI G 2025**.
