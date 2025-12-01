@@ -1,4 +1,4 @@
-# 🎫 Praktikum Progdas Gacorr – Aplikasi Tiketing Online
+# 🎫 Praktikum Progdas Gacorr – Aplikasi Tiketing 
 
 Halo! Selamat datang di repository **Praktikum Pemrograman Dasar Semester 1** yang dikerjakan oleh **Kelompok 5 – TI G 2025**.
 Kelompok kami pastinya **gacorr**, **josjis**, **rajin menabung**, dan tentunya **berbakti pada orang tua** 
