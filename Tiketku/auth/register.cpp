@@ -1,69 +1,70 @@
 #include "register.h"
 #include "../user/user.h"
 #include "../utils/helper.h"
-#include "../utils/file_util.h"
 #include <iostream>
+
 using namespace std;
 
-const string DB_USER = "database/users.csv";
-
-bool isUsernameTaken (string usernameInput, User* userArray, int totalData) {
-    for (int i = 0; i < totalData; i++)
+namespace auth
+{
+    bool isUsernameTaken(string usernameInput)
     {
-        if (userArray[i].username == usernameInput) {
+        for (int i = 0; i < global::totalUsers; i++)
+        {
+            if (global::allUsers[i].username == usernameInput)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool isEmailTaken(string emailInput)
+    {
+        for (int i = 0; i < global::totalUsers; i++)
+        {
+            if (global::allUsers[i].email == emailInput)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool isNoTelpTaken(string no_telpInput)
+    {
+        for (int i = 0; i < global::totalUsers; i++)
+        {
+            if (global::allUsers[i].no_telp == no_telpInput)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool registerUser(global::User *userRegister)
+    {
+
+        userRegister->password = helper::simpleEncrypt(userRegister->password);
+
+        helper::generateUserID(global::totalUsers, &userRegister->id);
+
+        if (global::appendUserToCSV(*userRegister))
+        {
+            global::allUsers[global::totalUsers] = *userRegister;
+            global::totalUsers++;
+            global::authUser = *userRegister;
+
+            cout << "[SUKSES] Registrasi berhasil! Silakan login dengan akun Anda." << endl;
             return true;
         }
+
+        cout << "[ERROR] Gagal menyimpan data user. Silakan coba lagi." << endl;
+        return false;
     }
 
-    return false;
-    
-}
-
-void registerUser() {
-    User newUser;
-    User tempsUsers[MAX_USER_CACHE];
-    string confirmPassword;
-
-
-    int totalUsers = loadUsersToArray(DB_USER, tempsUsers, MAX_USER_CACHE);
-
-    cout << "=== REGISTRASI PENGGUNA BARU ===" << endl;
-
-    while (true) {
-        cout << "Masukkan username: ";
-        cin >> newUser.username;
-
-        if (isUsernameTaken(newUser.username, tempsUsers, totalUsers)) {
-            cout << "[ERROR] Username sudah digunakan. Silakan coba lagi." << endl;
-        } else {
-            break;
-        }
-    }
-
-    cout << "Masukkan password: ";
-    cin >> newUser.password;
-    cout << "Konfirmasi password: ";
-    cin >> confirmPassword;
-
-    if(newUser.password != confirmPassword) {
-        cout << "[ERROR] Password dan konfirmasi password tidak sesuai. Registrasi dibatalkan." << endl;
-        return;
-    }
-
-    cin.ignore();
-    cout << "Masukkan nama lengkap: ";
-    getline(cin, newUser.nama_lengkap);
-    cout << "Masukkan email: ";
-    cin >> newUser.email;
-    cout << "Masukkan nomor telepon: ";
-    cin >> newUser.no_telp;
-
-    newUser.role = "user";
-    newUser.saldo = 0;
-
-    generateUserID(totalUsers, &newUser.id);
-
-    newUser.password = simpleEncrypt(newUser.password);
-    appendUserToCSV(DB_USER, newUser);
-    
 }

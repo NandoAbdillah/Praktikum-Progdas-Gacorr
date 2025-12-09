@@ -1,84 +1,91 @@
 #include "login.h"
 #include "../utils/helper.h"
-#include "../utils/file_util.h"
 #include <iostream>
 #include <fstream>
+#include "../user/user.h"
 
 using namespace std;
+using namespace global;
+using namespace helper;
 
-const string DB_USERS = "database/users.csv";
-const string FILE_SESSION = "database/session.txt";
+namespace auth
+{
 
-void saveSession(string username) {
-    ofstream file(FILE_SESSION);
-    if (file.is_open()) {
-        file << username; 
-        file.close();
-    }
-}
 
-void logout() {
-    ofstream file(FILE_SESSION, ios::trunc);
-    file.close();
-}
-
-bool loginUser(User* activeUser) {
-    string inputUser, inputPass;
-    
-    User daftarUser[MAX_USER_CACHE]; 
-    int totalUser = loadUsersToArray(DB_USERS, daftarUser, MAX_USER_CACHE);
-
-    
-    if (totalUser == 0) {
-        cout << "[INFO] Database kosong/tidak ditemukan." << endl;
-        return false; 
-    }
-
-    cout << "\n=== LOGIN TIKETKU ===" << endl;
-    cout << "Username: ";
-    cin >> inputUser;
-    cout << "Password: ";
-    cin >> inputPass;
-
-    for (int i = 0; i < totalUser; i++) {
-        if (daftarUser[i].username == inputUser) {
-            string dbPassDec = simpleDecrypt(daftarUser[i].password);
-            
-            if (dbPassDec == inputPass) {
-                *activeUser = daftarUser[i]; 
-                saveSession(activeUser->username);
-                cout << "[SUKSES] Selamat datang, " << activeUser->nama_lengkap << "!" << endl;
-                return true;
-            } else {
-                cout << "[ERROR] Password salah!" << endl;
-                return false;
-            }
+    void saveSession(string username)
+    {
+        ofstream file(FILE_SESSION);
+        if (file.is_open())
+        {
+            file << username;
+            file.close();
         }
     }
 
-    cout << "[ERROR] Username tidak ditemukan." << endl;
-    return false;
-}
+    void logout()
+    {
 
-bool checkSession(User* activeUser) {
-    ifstream file(FILE_SESSION);
-    string sessionUsername;
+        global::isLoggedIn = false;
+        global::authUser = User();
+        ofstream file(FILE_SESSION, ios::trunc);
+        file.close();
+    }
 
-    if (file.is_open()) {
-        if (getline(file, sessionUsername)) {
-            User daftarUser[MAX_USER_CACHE];
-            int totalUser = loadUsersToArray(DB_USERS, daftarUser, MAX_USER_CACHE);
-            
-            for(int i = 0; i < totalUser; i++) {
-                if(daftarUser[i].username == sessionUsername) {
-                    *activeUser = daftarUser[i]; 
-                    file.close();
+    bool loginUser(User *userLogin)
+    {
+
+        for (int i = 0; i < totalUsers; i++)
+        {
+            if (allUsers[i].username == userLogin->username)
+            {
+                string dbPassDec = simpleDecrypt(allUsers[i].password);
+
+                if (dbPassDec == userLogin->password)
+                {
+                    authUser = allUsers[i];
+                    global::indexAuthUser = i;
+                    saveSession(userLogin->username);
+                    cout << "[SUKSES] Selamat datang, " << userLogin->nama_lengkap << "!" << endl;
                     return true;
+                }
+                else
+                {
+                    cout << "[ERROR] Password salah!" << endl;
+                    return false;
                 }
             }
         }
-        file.close();
+
+        cout << "[ERROR] Username tidak ditemukan." << endl;
+        return false;
     }
-    
-    return false;
+
+    bool checkSession(User *activeUser)
+    {
+        ifstream file(FILE_SESSION);
+        string sessionUsername;
+
+        if (file.is_open())
+        {
+            if (getline(file, sessionUsername))
+            {
+                User allUsers[MAX_USER_CACHE];
+
+                for (int i = 0; i < totalUsers; i++)
+                {
+                    if (allUsers[i].username == sessionUsername)
+                    {
+                        // *activeUser = daftarUser[i];
+
+                        authUser = allUsers[i];
+                        file.close();
+                        return true;
+                    }
+                }
+            }
+            file.close();
+        }
+
+        return false;
+    }
 }

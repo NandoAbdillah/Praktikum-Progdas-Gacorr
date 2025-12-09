@@ -4,13 +4,24 @@
 #include <string>
 using namespace std;
 
-string simpleEncrypt(string rawPass);
-string simpleDecrypt(string encPass);
+namespace helper
+{
+    string simpleEncrypt(string rawPass);
+    string simpleDecrypt(std::string encPass);
 
-string getCSVColumn(string line, int colIndex);
+    string getCSVColumn(std::string line, int colIndex);
 
-void generateUserID(int userCount, string* outID);
+    void generateUserID(int totalData, string *outID);
 
+    string messageBox(string message);
+    string responseBox(bool status, string message);
 
+    string getDate(int add_date);
+    string generateIDTiket();
+
+    string padRight(string text, int width);
+
+    void generateIDJadwal(int totalData,  string *outID, string prefix);
+}
 
 #endif // !HELPER_H

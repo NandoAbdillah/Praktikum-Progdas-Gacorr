@@ -1,10 +1,21 @@
 #ifndef LOGIN_H
 #define LOGIN_H
+#define FILE_SESSION "./database/session.txt"
 #include "../user/user.h"
+#include <string>
 
-bool loginUser(User* activeUser);
-bool checkSession(User* activeUser);
 
-void logout();
+using namespace global;
+
+
+namespace auth
+{
+    bool loginUser(User *userLogin);
+    bool checkSession(User *userLogin);
+    void saveSession(string username);
+
+
+    void logout();
+}
 
 #endif // !LOGIN_H

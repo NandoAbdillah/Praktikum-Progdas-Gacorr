@@ -3,112 +3,82 @@
 #include "auth/login.h"
 #include "auth/register.h"
 #include "user/user.h"
+#include "menu/menu_user.h"
+#include "menu/menu_admin.h"
+#include "menu/menu_general.h"
+#include "utils/helper.h"
+#include "transport/transport.h"
+#include "ticket/ticket.h"
+
 
 using namespace std;
 
-User activeUser;
-bool isLoggedIn = false;
 
-void mainMenu()
+
+
+bool initData()
 {
-    cout << "=== TIKETKU MAIN MENU ===" << endl;
-    cout << "1. Login" << endl;
-    cout << "2. Register" << endl;
-    cout << "3. Keluar" << endl;
-    cout << "Pilih opsi: ";
-}
+    cout << "=== MEMUAT DATA APLIKASI ===" << endl;
 
-void userMenu()
-{
-    cout << "=== USER MENU ===" << endl;
-    cout << "Saldo : Rp " << activeUser.saldo << endl;
-    cout << "1. Beli Tiket " << endl;
-    cout << "2. Cek Saldo & Top Up" << endl;
-    cout << "3. Logout" << endl;
+    bool usersLoaded = global::loadUsers();
+    bool authUserLoaded = global::loadAuthUser();
+    bool transportLoaded = transport::loadTransportData();
+    bool ticketsLoaded = ticket::loadTickets();
+    bool authTicketsLoaded = ticket::loadAuthTickets();
+    
 
-    cout << "Pilih opsi: ";
-}
+    // cout << helper::responseBox(usersLoaded,"Memuat data pengguna dari database.")
+    //      << endl;
 
-void adminMenu()
-{
-    cout << "=== ADMIN MENU ===" << endl;
-    cout << "1. Kelola Tiket " << endl;
-    cout << "2. Cek Laporan" << endl;
-    cout << "3. Logout" << endl;
+    if (!usersLoaded && !authUserLoaded && !transportLoaded && !ticketsLoaded && !authTicketsLoaded)
+        return false;
 
-    cout << "Pilih opsi: ";
+    // bool ticketsLoaded = loadTickets();
+    // bool transLoaded = loadTransactions();
+
+    return true;
 }
 
 int main()
 {
 
-    int choice;
-
-    if (checkSession(&activeUser))
+    if (!initData())
     {
-        isLoggedIn = true;
-        cout << "\n[INFO] Login kembali sebagai " << activeUser.username << "..." << endl;
+        cout << "\n[ERROR] Inisialisasi gagal. Program dihentikan.\n";
+        return 0;
     }
+
+    //  cout << "\n[SUKSES] Semua data berhasil dimuat. Program dijalankan.\n\n";
+
+    general::clearScreen();
+
+    if(global::isLoggedIn) {
+        cout << "[SUKSES] Selamat datang kembali, " << global::authUser.nama_lengkap << "!" << endl;
+
+    }
+
+    int rand;
 
     while (true)
     {
-        if (!isLoggedIn)
-        {
-            mainMenu();
-            cin >> choice;
+        if(!global::isLoggedIn) {
+            general::authScreen();
 
-            if (choice == 1)
-            {
-                // Login sekarang mengisi struct activeUser
-                if (loginUser(&activeUser))
-                {
-                    isLoggedIn = true;
-                }
-            }
-            else if (choice == 2)
-            {
-                registerUser();
-            }
-            else if (choice == 3)
-            {
-                cout << "Terima kasih telah menggunakan Tiketku." << endl;
-                break;
-            }
-            else
-            {
-                cout << "Pilihan tidak valid." << endl;
-            }
-        }
-        else
-        {
-            // Jika sudah login, cek role dari struct
-            if (activeUser.role == "admin")
-            {
-                adminMenu();
-            }
-            else
-            {
-                userMenu();
+        } else {
+            // cout << "dah login " << endl;
+            if(global::authUser.role == "admin") {
+                menu_admin::adminMenu();
+            } else {
+                menu_user::userMenu();
             }
 
-            cin >> choice;
-            if (choice == 3)
-            {
-
+            if(global::authUser.username == "") {
                 isLoggedIn = false;
-                logout();
-
-                activeUser.username = "";
-                activeUser.role = "";
-
-                cout << "Anda telah logout." << endl;
-            }
-            else
-            {
-                cout << "Fitur belum tersedia di demo ini." << endl;
             }
         }
     }
+    
 
-    return 0;
+
+     
 }
