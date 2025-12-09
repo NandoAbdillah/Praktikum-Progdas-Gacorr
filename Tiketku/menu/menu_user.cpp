@@ -12,26 +12,38 @@ using namespace std;
 
 namespace menu_user
 {
+    // Variabel lebar untuk formatting
+    const int wContent = 43; // Lebar standar untuk box tiket/profil (Header 47 char)
+    const int wRute = 59;    // Lebar untuk box rute (Header 63 char)
+    const int wKelas = 35;   // Lebar untuk box kelas/tanggal (Header 39 char)
+
     void kereta()
     {
         int ruteIndex, kelasKode, pilihanHari;
         string tanggalFix, kursi;
 
         // --- 1. PILIH RUTE ---
+        // (Menggunakan padRight karena loop data dinamis belum ada border kanan)
         cout << "\n+-------------------------------------------------------------+" << endl;
-        cout << "|                   PILIH RUTE KERETA API                     |" << endl;
+        cout << "|                  PILIH RUTE KERETA API                      |" << endl;
         cout << "+-------------------------------------------------------------+" << endl;
 
         for (int i = 0; i < transport::totalTrainSchedules; i++)
         {
-            cout << "| " << i + 1 << ". " << transport::allTrainSchedules[i].stasiun_asal
-                 << " - " << transport::allTrainSchedules[i].stasiun_tujuan;
-
+            string baris1 = to_string(i + 1) + ". " + transport::allTrainSchedules[i].stasiun_asal + " - " + transport::allTrainSchedules[i].stasiun_tujuan;
+            
             if (transport::allTrainSchedules[i].via != "-")
             {
-                cout << " (Via " << transport::allTrainSchedules[i].via << ")";
+                baris1 += " (Via " + transport::allTrainSchedules[i].via + ")";
             }
-            cout << "\n|    Jam: " << transport::allTrainSchedules[i].jam_berangkat << endl;
+            
+            // Output Baris 1 dengan border
+            cout << "| " << helper::padRight(baris1, wRute) << " |" << endl;
+
+            string baris2 = "   Jam: " + transport::allTrainSchedules[i].jam_berangkat;
+            
+            // Output Baris 2 dengan border
+            cout << "| " << helper::padRight(baris2, wRute) << " |" << endl;
             cout << "+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +" << endl;
         }
 
@@ -55,9 +67,11 @@ namespace menu_user
         {
             if (transport::allTicketPrices[i].tipe_kendaraan == "Kereta Api")
             {
-                cout << "| " << transport::allTicketPrices[i].kode_kelas << ". "
-                     << transport::allTicketPrices[i].nama_kelas
-                     << " -> Rp" << transport::allTicketPrices[i].harga_rupiah << endl;
+                string infoKelas = to_string(transport::allTicketPrices[i].kode_kelas) + ". " +
+                                   transport::allTicketPrices[i].nama_kelas + " -> Rp" +
+                                   to_string(transport::allTicketPrices[i].harga_rupiah);
+                
+                cout << "| " << helper::padRight(infoKelas, wKelas) << " |" << endl;
             }
         }
         cout << "+-------------------------------------+" << endl;
@@ -91,9 +105,10 @@ namespace menu_user
         string hari1 = helper::getDate(0);
         string hari2 = helper::getDate(1);
         string hari3 = helper::getDate(2);
-        cout << "| 1. Hari Ini (" << hari1 << ")" << endl;
-        cout << "| 2. Besok    (" << hari2 << ")" << endl;
-        cout << "| 3. Lusa     (" << hari3 << ")" << endl;
+        
+        cout << "| " << helper::padRight("1. Hari Ini (" + hari1 + ")", wKelas) << " |" << endl;
+        cout << "| " << helper::padRight("2. Besok    (" + hari2 + ")", wKelas) << " |" << endl;
+        cout << "| " << helper::padRight("3. Lusa     (" + hari3 + ")", wKelas) << " |" << endl;
         cout << "+-------------------------------------+" << endl;
         
         cout << ">> Pilih tanggal (1-3): ";
@@ -111,7 +126,7 @@ namespace menu_user
             return;
         }
 
-        // --- 4. PILIH KURSI ---
+        // --- 4. PILIH KURSI (TIDAK DIUBAH SESUAI INSTRUKSI) ---
         bool kursiValid = false;
         do
         {
@@ -201,20 +216,20 @@ namespace menu_user
         tiketBaru.jam = jadwalTerpilih.jam_berangkat;
         tiketBaru.kursi = kursi;
 
-        // --- 6. OUTPUT DETAIL ---
+        // --- 6. OUTPUT DETAIL (DITERAPKAN PADRIGHT) ---
         cout << "\n+=============================================+" << endl;
         cout << "|           TIKET BERHASIL DIPESAN            |" << endl;
         cout << "+=============================================+" << endl;
-        cout << "| ID Tiket    : " << tiketBaru.id_tiket << endl;
-        cout << "| Kendaraan   : " << tiketBaru.tipe_kendaraan << " (" << jadwalTerpilih.nama_kereta << ")" << endl;
-        cout << "| Rute        : " << tiketBaru.asal << " - " << tiketBaru.tujuan << endl;
+        cout << "| " << helper::padRight("ID Tiket    : " + tiketBaru.id_tiket, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Kendaraan   : " + tiketBaru.tipe_kendaraan + " (" + jadwalTerpilih.nama_kereta + ")", wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Rute        : " + tiketBaru.asal + " - " + tiketBaru.tujuan, wContent) << " |" << endl;
         if (jadwalTerpilih.via != "-")
-            cout << "| Via         : " << jadwalTerpilih.via << endl;
-        cout << "| Jadwal      : " << tiketBaru.tanggal << " " << tiketBaru.jam << endl;
-        cout << "| Kelas       : " << tiketBaru.kelas << endl;
-        cout << "| Kursi       : " << tiketBaru.kursi << endl;
+            cout << "| " << helper::padRight("Via         : " + jadwalTerpilih.via, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Jadwal      : " + tiketBaru.tanggal + " " + tiketBaru.jam, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Kelas       : " + tiketBaru.kelas, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Kursi       : " + tiketBaru.kursi, wContent) << " |" << endl;
         cout << "+---------------------------------------------+" << endl;
-        cout << "| Total Bayar : Rp" << tiketBaru.harga << endl;
+        cout << "| " << helper::padRight("Total Bayar : Rp" + to_string(tiketBaru.harga), wContent) << " |" << endl;
         cout << "+=============================================+" << endl;
 
         ticket::appendTicketToCSV(tiketBaru);
@@ -228,15 +243,16 @@ namespace menu_user
 
         // --- 1. PILIH RUTE BUS ---
         cout << "\n+-------------------------------------------------------------+" << endl;
-        cout << "|                   PILIH RUTE BUS ANTAR KOTA                 |" << endl;
+        cout << "|                  PILIH RUTE BUS ANTAR KOTA                  |" << endl;
         cout << "+-------------------------------------------------------------+" << endl;
 
         for (int i = 0; i < transport::totalBusSchedules; i++)
         {
-            cout << "| " << i + 1 << ". " << transport::allBusSchedules[i].terminal_asal
-                 << " - " << transport::allBusSchedules[i].terminal_tujuan << endl;
-            cout << "|    Jam: " << transport::allBusSchedules[i].jam_berangkat
-                 << " (Tiba: " << transport::allBusSchedules[i].estimasi_tiba << ")" << endl;
+            string baris1 = to_string(i + 1) + ". " + transport::allBusSchedules[i].terminal_asal + " - " + transport::allBusSchedules[i].terminal_tujuan;
+            string baris2 = "   Jam: " + transport::allBusSchedules[i].jam_berangkat + " (Tiba: " + transport::allBusSchedules[i].estimasi_tiba + ")";
+            
+            cout << "| " << helper::padRight(baris1, wRute) << " |" << endl;
+            cout << "| " << helper::padRight(baris2, wRute) << " |" << endl;
             cout << "+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - +" << endl;
         }
 
@@ -260,9 +276,11 @@ namespace menu_user
         {
             if (transport::allTicketPrices[i].tipe_kendaraan == "Bus")
             {
-                cout << "| " << transport::allTicketPrices[i].kode_kelas << ". "
-                     << transport::allTicketPrices[i].nama_kelas
-                     << " -> Rp" << transport::allTicketPrices[i].harga_rupiah << endl;
+                string infoKelas = to_string(transport::allTicketPrices[i].kode_kelas) + ". " +
+                                   transport::allTicketPrices[i].nama_kelas + " -> Rp" +
+                                   to_string(transport::allTicketPrices[i].harga_rupiah);
+                
+                cout << "| " << helper::padRight(infoKelas, wKelas) << " |" << endl;
             }
         }
         cout << "+-------------------------------------+" << endl;
@@ -296,9 +314,10 @@ namespace menu_user
         string hari1 = helper::getDate(0);
         string hari2 = helper::getDate(1);
         string hari3 = helper::getDate(2);
-        cout << "| 1. Hari Ini (" << hari1 << ")" << endl;
-        cout << "| 2. Besok    (" << hari2 << ")" << endl;
-        cout << "| 3. Lusa     (" << hari3 << ")" << endl;
+        
+        cout << "| " << helper::padRight("1. Hari Ini (" + hari1 + ")", wKelas) << " |" << endl;
+        cout << "| " << helper::padRight("2. Besok    (" + hari2 + ")", wKelas) << " |" << endl;
+        cout << "| " << helper::padRight("3. Lusa     (" + hari3 + ")", wKelas) << " |" << endl;
         cout << "+-------------------------------------+" << endl;
         
         cout << ">> Pilih tanggal (1-3): ";
@@ -313,7 +332,7 @@ namespace menu_user
             return;
         }
 
-        // --- 4. PILIH KURSI ---
+        // --- 4. PILIH KURSI (TIDAK DIUBAH SESUAI INSTRUKSI) ---
         bool kursiValid = false;
         do
         {
@@ -405,18 +424,18 @@ namespace menu_user
         tiketBaru.jam = jadwalTerpilih.jam_berangkat;
         tiketBaru.kursi = kursi;
 
-        // --- 6. OUTPUT DETAIL ---
+        // --- 6. OUTPUT DETAIL (DITERAPKAN PADRIGHT) ---
         cout << "\n+=============================================+" << endl;
         cout << "|           TIKET BERHASIL DIPESAN            |" << endl;
         cout << "+=============================================+" << endl;
-        cout << "| ID Tiket    : " << tiketBaru.id_tiket << endl;
-        cout << "| Kendaraan   : " << tiketBaru.tipe_kendaraan << endl;
-        cout << "| Rute        : " << tiketBaru.asal << " - " << tiketBaru.tujuan << endl;
-        cout << "| Jadwal      : " << tiketBaru.tanggal << " " << tiketBaru.jam << endl;
-        cout << "| Kelas       : " << tiketBaru.kelas << endl;
-        cout << "| Kursi       : " << tiketBaru.kursi << endl;
+        cout << "| " << helper::padRight("ID Tiket    : " + tiketBaru.id_tiket, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Kendaraan   : " + tiketBaru.tipe_kendaraan, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Rute        : " + tiketBaru.asal + " - " + tiketBaru.tujuan, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Jadwal      : " + tiketBaru.tanggal + " " + tiketBaru.jam, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Kelas       : " + tiketBaru.kelas, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Kursi       : " + tiketBaru.kursi, wContent) << " |" << endl;
         cout << "+---------------------------------------------+" << endl;
-        cout << "| Total Bayar : Rp" << tiketBaru.harga << endl;
+        cout << "| " << helper::padRight("Total Bayar : Rp" + to_string(tiketBaru.harga), wContent) << " |" << endl;
         cout << "+=============================================+" << endl;
 
         ticket::appendTicketToCSV(tiketBaru);
@@ -426,6 +445,7 @@ namespace menu_user
     void pilihKendaraan()
     {
         int choice;
+        // Menu ini sudah memiliki border kanan di kode asli, jadi tidak diubah
         cout << "\n+---------------------------------+" << endl;
         cout << "|      PILIH JENIS KENDARAAN      |" << endl;
         cout << "+---------------------------------+" << endl;
@@ -447,7 +467,7 @@ namespace menu_user
         }
     }
 
-void cekStatusTiket()
+    void cekStatusTiket()
     {
         string id;
         cout << "\n+---------------------------------+" << endl;
@@ -476,25 +496,18 @@ void cekStatusTiket()
             string status = "AKTIF";
             string keterangan = "Tiket dapat digunakan";
             
-            // --- LOGIKA CEK KADALUARSA MANUAL (TANPA LIBRARY TAMBAHAN) ---
-            // Kita bandingkan tanggal tiket dengan tanggal hari ini dari helper::getDate(0)
-            // Asumsi format tanggal string: "DD/MM/YYYY" (contoh: 12/03/2025)
-            
-            string today = helper::getDate(0); // Ambil tanggal hari ini (string)
+            // --- LOGIKA CEK KADALUARSA MANUAL ---
+            string today = helper::getDate(0);
 
-            // Ambil angka tahun (posisi index 6, ambil 4 karakter)
             int yearNow = stoi(today.substr(6, 4));
             int yearTiket = stoi(t.tanggal.substr(6, 4));
 
-            // Ambil angka bulan (posisi index 3, ambil 2 karakter)
             int monthNow = stoi(today.substr(3, 2));
             int monthTiket = stoi(t.tanggal.substr(3, 2));
 
-            // Ambil angka hari/tanggal (posisi index 0, ambil 2 karakter)
             int dayNow = stoi(today.substr(0, 2));
             int dayTiket = stoi(t.tanggal.substr(0, 2));
 
-            // Cek Logika Waktu
             if (yearTiket < yearNow) {
                 status = "KADALUARSA";
             } else if (yearTiket == yearNow && monthTiket < monthNow) {
@@ -502,8 +515,8 @@ void cekStatusTiket()
             } else if (yearTiket == yearNow && monthTiket == monthNow && dayTiket < dayNow) {
                 status = "KADALUARSA";
             }
-            // -------------------------------------------------------------
 
+            // Output detail dengan padRight
             if (status == "KADALUARSA") {
                 keterangan = "Jadwal telah lewat";
                 cout << "\n+=============================================+" << endl;
@@ -515,50 +528,63 @@ void cekStatusTiket()
                 cout << "+=============================================+" << endl;
             }
 
-            cout << "| ID          : " << t.id_tiket << endl;
-            cout << "| Status      : " << status << endl;
-            cout << "| Keterangan  : " << keterangan << endl;
-            cout << "| Kendaraan   : " << t.tipe_kendaraan << endl;
-            cout << "| Rute        : " << t.asal << " - " << t.tujuan << endl;
-            cout << "| Kelas       : " << t.kelas << endl;
-            cout << "| Jadwal      : " << t.tanggal << " " << t.jam << endl;
-            cout << "| Kursi       : " << t.kursi << endl;
-            cout << "| Harga       : Rp" << t.harga << endl;
+            cout << "| " << helper::padRight("ID           : " + t.id_tiket, wContent) << " |" << endl;
+            cout << "| " << helper::padRight("Status       : " + status, wContent) << " |" << endl;
+            cout << "| " << helper::padRight("Keterangan   : " + keterangan, wContent) << " |" << endl;
+            cout << "| " << helper::padRight("Kendaraan    : " + t.tipe_kendaraan, wContent) << " |" << endl;
+            cout << "| " << helper::padRight("Rute         : " + t.asal + " - " + t.tujuan, wContent) << " |" << endl;
+            cout << "| " << helper::padRight("Kelas        : " + t.kelas, wContent) << " |" << endl;
+            cout << "| " << helper::padRight("Jadwal       : " + t.tanggal + " " + t.jam, wContent) << " |" << endl;
+            cout << "| " << helper::padRight("Kursi        : " + t.kursi, wContent) << " |" << endl;
+            cout << "| " << helper::padRight("Harga        : Rp" + to_string(t.harga), wContent) << " |" << endl;
             cout << "+=============================================+" << endl;
             
         }
         else
         {
+            // Output not found dengan padRight
             cout << "\n+=============================================+" << endl;
             cout << "|           STATUS: TIDAK DITEMUKAN           |" << endl;
             cout << "+=============================================+" << endl;
-            cout << "| ID tiket    : " << id << endl;
-            cout << "| Keterangan  : ID anda tidak terdaftar" << endl;
+            cout << "| " << helper::padRight("ID tiket     : " + id, wContent) << " |" << endl;
+            cout << "| " << helper::padRight("Keterangan   : ID anda tidak terdaftar", wContent) << " |" << endl;
             cout << "+=============================================+" << endl;
         }
     }
 
-    void riwayatPembelianTiket()
+void riwayatPembelianTiket()
     {
-        cout << "\n+=============================================+" << endl;
-        cout << "|           RIWAYAT PEMBELIAN TIKET           |" << endl;
-        cout << "+=============================================+" << endl;
-        cout << "| Total Tiket Ditemukan: " << ticket::totalAuthTickets << endl;
-        cout << "+=============================================+" << endl;
+        // PERBAIKAN: Gunakan lebar khusus (65) agar muat nama rute yang panjang
+        // Total lebar tabel = 2 (kiri) + 65 (konten) + 2 (kanan) = 69 karakter
+        int wHistory = 65; 
+
+        // Header diperpanjang menyesuaikan lebar baru (Total 69 karakter)
+        cout << "\n+===================================================================+" << endl;
+        cout << "|                      RIWAYAT PEMBELIAN TIKET                      |" << endl;
+        cout << "+===================================================================+" << endl;
+        
+        cout << "| " << helper::padRight("Total Tiket Ditemukan: " + to_string(ticket::totalAuthTickets), wHistory) << " |" << endl;
+        cout << "+===================================================================+" << endl;
 
         for (int i = 0; i < ticket::totalAuthTickets; i++)
         {
-            cout << "\n+---------------------------------------------+" << endl;
-            cout << "|                 TIKET KE-" << i + 1 << "                  |" << endl;
-            cout << "+---------------------------------------------+" << endl;
-            cout << "| ID Tiket    : " << ticket::authTickets[i].id_tiket << endl;
-            cout << "| Kendaraan   : " << ticket::authTickets[i].tipe_kendaraan << endl;
-            cout << "| Rute        : " << ticket::authTickets[i].asal << " - " << ticket::authTickets[i].tujuan << endl;
-            cout << "| Jadwal      : " << ticket::authTickets[i].tanggal << " " << ticket::authTickets[i].jam << endl;
-            cout << "| Kelas       : " << ticket::authTickets[i].kelas << endl;
-            cout << "| Kursi       : " << ticket::authTickets[i].kursi << endl;
-            cout << "| Total Bayar : Rp" << ticket::authTickets[i].harga << endl;
-            cout << "+---------------------------------------------+" << endl;
+            cout << "\n+-------------------------------------------------------------------+" << endl;
+            cout << "| " << helper::padRight("TIKET KE-" + to_string(i + 1), wHistory) << " |" << endl;
+            cout << "+-------------------------------------------------------------------+" << endl;
+            
+            // Gunakan wHistory (65) bukan wContent (43)
+            cout << "| " << helper::padRight("ID Tiket    : " + ticket::authTickets[i].id_tiket, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Kendaraan   : " + ticket::authTickets[i].tipe_kendaraan, wHistory) << " |" << endl;
+            
+            // Bagian Rute yang panjang sekarang akan muat karena lebar sudah 65
+            cout << "| " << helper::padRight("Rute        : " + ticket::authTickets[i].asal + " - " + ticket::authTickets[i].tujuan, wHistory) << " |" << endl;
+            
+            cout << "| " << helper::padRight("Jadwal      : " + ticket::authTickets[i].tanggal + " " + ticket::authTickets[i].jam, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Kelas       : " + ticket::authTickets[i].kelas, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Kursi       : " + ticket::authTickets[i].kursi, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Total Bayar : Rp" + to_string(ticket::authTickets[i].harga), wHistory) << " |" << endl;
+            
+            cout << "+-------------------------------------------------------------------+" << endl;
         }
     }
 
@@ -580,6 +606,7 @@ void cekStatusTiket()
 
     void editProfile()
     {
+        // Menu ini sudah memiliki border kanan di kode asli, jadi tidak diubah
         cout << "\n+---------------------------------+" << endl;
         cout << "|           EDIT PROFIL           |" << endl;
         cout << "+---------------------------------+" << endl;
@@ -606,7 +633,7 @@ void cekStatusTiket()
             if (auth::isUsernameTaken(usernameBaru))
             {
                 cout << "[!] Username sudah digunakan. Silakan pilih username lain." << endl;
-                editProfile(); // Recursive call (hati-hati, tapi ini dari kode asli)
+                editProfile(); 
             }
             else {
                 global::authUser.username = usernameBaru;
@@ -682,14 +709,19 @@ void cekStatusTiket()
     {
         int opsi;
 
+        // Header tetap sama
         cout << "\n+=============================================+" << endl;
-        cout << "|                PROFIL PENGGUNA              |" << endl;
+        cout << "|               PROFIL PENGGUNA               |" << endl;
         cout << "+=============================================+" << endl;
-        cout << "| Username : " << global::authUser.username << endl;
-        cout << "| Nama     : " << global::authUser.nama_lengkap << endl;
-        cout << "| Email    : " << global::authUser.email << endl;
-        cout << "| No HP    : " << global::authUser.no_telp << endl;
+        
+        // Data pengguna (variabel dinamis) DITERAPKAN padRight
+        cout << "| " << helper::padRight("Username : " + global::authUser.username, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Nama     : " + global::authUser.nama_lengkap, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Email    : " + global::authUser.email, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("No HP    : " + global::authUser.no_telp, wContent) << " |" << endl;
         cout << "+---------------------------------------------+" << endl;
+        
+        // Menu opsi di bawah sudah punya border di kode asli, JANGAN diubah
         cout << "| Opsi:                                       |" << endl;
         cout << "| 1. Ubah Profil                              |" << endl;
         cout << "| 2. Ubah Password                            |" << endl;
@@ -725,7 +757,7 @@ void cekStatusTiket()
         int choice;
 
         cout << "\n+=============================================+" << endl;
-        cout << "|               MAIN MENU - USER              |" << endl;
+        cout << "|              MAIN MENU - USER               |" << endl;
         cout << "+=============================================+" << endl;
         cout << "| 1. Beli Tiket                               |" << endl;
         cout << "| 2. Cek Status Tiket                         |" << endl;
