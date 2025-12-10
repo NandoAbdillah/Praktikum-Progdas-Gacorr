@@ -13,9 +13,6 @@ Kelompok kami pastinya **gacorr**, **josjis**, **rajin menabung**, dan tentunya 
   
 ---
 
-Kalau mau versi yang lebih *stylish*, lebih formal, atau pakai bullet emoji lainnya, tinggal bilang aja!
-
-
 Project ini adalah implementasi materi Progdas Semester 1 seperti **kondisional, perulangan, array, fungsi, serta file handling**, yang kami kemas menjadi sebuah mini–aplikasi bernama:
 
 # 🎟️ **Tiketku**
