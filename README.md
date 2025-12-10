@@ -66,9 +66,9 @@ Admin memiliki fitur manajerial:
 
 Tampilan pilihan:
 
-* Login sebagai Pembeli
-* Login sebagai Admin
-* Register Pengguna Baru
+* Login
+* Register
+* Keluar
 
 ---
 
