@@ -34,9 +34,7 @@ Pengguna bisa melakukan hal-hal berikut:
 
 * **Login**
 * **Register akun baru**
-* **Forgot Password** (via email / nomor telepon)
 * **Beli tiket**
-* **Cek saldo pengguna**
 * **Cek status tiket**
 * **Lihat riwayat pembelian**
 * **Lihat & edit profil**
@@ -50,7 +48,6 @@ Admin memiliki fitur manajerial:
 * Melihat data user
 * Melihat data tiket
 * Menambahkan jadwal baru
-* Mengubah harga/tarif kendaraan
 * Logout
 
 ---
@@ -64,7 +61,6 @@ Tampilan pilihan:
 * Login sebagai Pembeli
 * Login sebagai Admin
 * Register Pengguna Baru
-* Forgot Password
 
 ---
 
@@ -86,21 +82,11 @@ Input data berikut:
 * Email
 * Nomor telepon
 
-### ❓ Forgot Password:
-
-* Pilih reset via email/nomor telepon
-* Masukkan kode OTP
-* Masukkan password baru
-* Konfirmasi password
-
----
-
 ## 💳 **Menu Pembeli**
 
 Berisi fitur:
 
 * **Beli tiket**
-* **Saldo pengguna**
 * **Cek status tiket**
 * **Riwayat pembelian**
 * **Profil**
@@ -177,7 +163,6 @@ Berisi fitur:
 
 ## 🔐 **Ganti Password**
 
-* Masukkan password lama
 * Masukkan password baru
 * Konfirmasi
 
@@ -193,25 +178,17 @@ Berisi fitur:
   * Nama lengkap
   * Username
   * Email
-  * Password
   * Nomor telepon
 
 ### 🎫 Lihat Data Tiket
 
 * Pilih kendaraan
-* Pilih jadwal
 * Tampilkan seluruh tiket yang terdaftar
 
 ### ➕ Tambah Jadwal
 
 * Pilih kendaraan
 * Tambahkan jadwal baru
-
-### 💰 Ubah Tarif
-
-* Pilih kendaraan
-* Pilih jadwal
-* Masukkan harga baru
 
 ---
 
