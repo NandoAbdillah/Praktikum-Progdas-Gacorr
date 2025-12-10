@@ -52,6 +52,13 @@ Admin memiliki fitur manajerial:
 
 ---
 
+### ▶️ **Menjalankan Program **
+ * cd Tiketku
+ * g++ main.cpp auth/login.cpp auth/register.cpp utils/helper.cpp user/user.cpp menu/menu_general.cpp ticket/ticket.cpp menu/menu_user.cpp menu/menu_admin.cpp transport/transport.cpp auth/forgot_password.cpp -o main
+ * ./main
+ 
+---
+
 ## 🧭 **Alur Program (Flow Program)**
 
 ### 🏠 **1. Menu Awal**
@@ -196,11 +203,7 @@ Berisi fitur:
 
 * Aplikasi ini menggunakan **file handling (fstream)** sebagai database sederhana.
 * Semua fitur dibuat sebagai implementasi penuh materi Progdas Semester 1.
-* Project dibuat oleh Kelompok 5 TI G.
-* Menjalankan Program (Jalankan sesuai urutan) :
-  1. cd Tiketku
-  2. g++ main.cpp auth/login.cpp auth/register.cpp utils/helper.cpp user/user.cpp menu/menu_general.cpp ticket/ticket.cpp menu/menu_user.cpp menu/menu_admin.cpp transport/transport.cpp auth/forgot_password.cpp -o main
-  3. ./main   
+* Project dibuat oleh Kelompok 5 TI G.  
   
 ---
 
