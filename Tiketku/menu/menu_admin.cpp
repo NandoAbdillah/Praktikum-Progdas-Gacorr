@@ -4,6 +4,8 @@
 #include "../user/user.h"
 #include "./menu_admin.h"
 #include "../transport/transport.h"
+#include "../ticket/ticket.h"
+#include <cstring>
 
 using namespace std;
 
@@ -51,65 +53,71 @@ namespace menu_admin
         cout << "Pilih opsi: ";
         cin >> choice;
 
+        if (!ticket::loadBusTickets &&
+            !ticket::loadTrainTickets)
+        {
+            cout << "Terjadi kesalahan saat memuat data tiket";
+            return;
+        }
+
+        string kendaraan;
+        int totalTiketTampil;
+        ticket::Ticket tiketTampil[100];
+
         switch (choice)
         {
-        case 1: // menampilkan jadwal kereta api
+        case 1:
         {
-            int x;
-            cout << "Pilih jadwal Kereta Api Yang Tersedia: " << endl;
-            cout << "1. Surabaya Kota-Blitar" << "\t\t\t" << "12/03/2025" << "\t" << "08:30 " << endl;
-            cout << "2. Surabaya Gubeng-Blitar Via Malang" << "\t" << "12/03/2025" << "\t" << "09:30 " << endl;
-            cout << "3. Surabaya Gubeng-Probolinggo" << "\t\t" << "12/03/2025" << "\t" << "10:30 " << endl;
-
-            cout << "Pilih Jadwal : ";
-            cin >> x;
-
-            switch (x)
-            {
-            case 1: // contoh tampilan pada jadwal pertama, setiap jadwal punya data tiket yang berbeda
-                cout << "ID         : BSP20250312091527" << endl;
-                cout << "Kendaraan  : Bus" << endl;
-                cout << "Rute       : Surabaya Kota-Blitar" << endl;
-                cout << "Kelas      : Eksekutif" << endl;
-                cout << "Jadwal     : 12/03/2025 08:30" << endl;
-                cout << "Kursi      : 10A" << endl;
-                cout << "Harga      : Rp350.000" << endl;
-                break;
-            default:
-                break;
-            }
+            kendaraan = "Kereta Api";
+            totalTiketTampil = ticket::totalTrainTickets;
         }
         break;
-        case 2: // menampilkan jadwal bus
-        {
-            int x;
-            cout << "Pilih jadwal Kereta Api Yang Tersedia: " << endl;
-            cout << "1. Purabaya Bungurasih – Malang " << "\t\t\t" << "12/03/2025" << "\t" << "08:30 " << endl;
-            cout << "2. Purabaya Bungurasih – Probolinggo " << "\t" << "12/03/2025" << "\t" << "09:30 " << endl;
-            cout << "3. Purabaya Bungurasih – Kediri " << "\t\t" << "12/03/2025" << "\t" << "10:30 " << endl;
 
-            cout << "Pilih Jadwal : ";
-            cin >> x;
-
-            switch (x)
-            {
-            case 1: // contoh tampilan pada jadwal pertama, setiap jadwal punya data tiket yang berbeda
-                cout << "ID         : BSP20250312091527" << endl;
-                cout << "Kendaraan  : Bus" << endl;
-                cout << "Rute       : Surabaya Kota-Blitar" << endl;
-                cout << "Kelas      : Eksekutif" << endl;
-                cout << "Jadwal     : 12/03/2025 08:30" << endl;
-                cout << "Kursi      : 10A" << endl;
-                cout << "Harga      : Rp350.000" << endl;
-                break;
-            default:
-                break;
-            }
-        }
-        break;
         default:
-            break;
+        {
+            kendaraan = "Bus";
+            totalTiketTampil = ticket::totalBusTickets;
         }
+        break;
+        }
+
+        int wHistory = 65;
+
+        cout << "\n+===================================================================+" << endl;
+        cout << "|                      RIWAYAT PEMBELIAN TIKET " << kendaraan << "             |" << endl;
+        cout << "+===================================================================+" << endl;
+
+        cout << "| " << helper::padRight("Total Tiket Ditemukan: " + to_string(totalTiketTampil), wHistory) << " |" << endl;
+        cout << "+===================================================================+" << endl;
+
+        for (int i = 0; i < ticket::totalTickets; i++)
+        {
+
+            if (ticket::allTickets[i].tipe_kendaraan == kendaraan)
+            {
+                tiketTampil[i] = ticket::allTickets[i];
+            }
+            else
+            {
+                continue;
+            }
+
+            cout << "\n+-------------------------------------------------------------------+" << endl;
+            cout << "| " << helper::padRight("TIKET KE-" + to_string(i + 1), wHistory) << " |" << endl;
+            cout << "+-------------------------------------------------------------------+" << endl;
+            cout << "| " << helper::padRight("ID Tiket    : " + tiketTampil[i].id_tiket, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Kendaraan   : " + tiketTampil[i].tipe_kendaraan, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Rute        : " + tiketTampil[i].asal + " - " + tiketTampil[i].tujuan, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Jadwal      : " + tiketTampil[i].tanggal + " " + tiketTampil[i].jam, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Kelas       : " + tiketTampil[i].kelas, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Kursi       : " + tiketTampil[i].kursi, wHistory) << " |" << endl;
+            cout << "| " << helper::padRight("Total Bayar : Rp" + to_string(tiketTampil[i].harga), wHistory) << " |" << endl;
+            cout << "+-------------------------------------------------------------------+" << endl;
+        }
+    }
+
+    void AllTiket(int kendaraan)
+    {
     }
 
     void jadwalKereta()
@@ -117,10 +125,10 @@ namespace menu_admin
 
         transport::TrainSchedule jadwalKeretaBaru;
 
-        cout << "=== Tambah Jadwal Baru ==="<< endl;
+        cout << "=== Tambah Jadwal Baru ===" << endl;
         cout << "Nama Kereta : ";
         getline(cin, jadwalKeretaBaru.nama_kereta);
-        
+
         cout << "Stasiun Asal : ";
 
         getline(cin, jadwalKeretaBaru.stasiun_asal);
@@ -156,17 +164,16 @@ namespace menu_admin
 
         transport::BusSchedule jadwalBusBaru;
 
-        cout << "=== Tambah Jadwal Baru ==="<< endl;
+        cout << "=== Tambah Jadwal Baru ===" << endl;
         cout << "Nama Bus : ";
 
         getline(cin, jadwalBusBaru.nama_bus);
-        
+
         cout << "Stasiun Asal : ";
         getline(cin, jadwalBusBaru.terminal_asal);
 
         cout << "Stasiun Tujuan : ";
         getline(cin, jadwalBusBaru.terminal_tujuan);
-
 
         cout << "Jam Berangkat : ";
         getline(cin, jadwalBusBaru.jam_berangkat);
