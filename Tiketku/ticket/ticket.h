@@ -24,11 +24,17 @@ namespace ticket
 
     extern Ticket allTickets[100];
     extern Ticket authTickets[100];
+    extern Ticket busTickets[100];
+    extern Ticket trainTickets[100];
     extern int totalAuthTickets;
     extern int totalTickets;
+    extern int totalBusTickets;
+    extern int totalTrainTickets;
 
     bool loadTickets();
     bool loadAuthTickets();
+    bool loadTrainTickets();
+    bool loadBusTickets();
     bool appendTicketToCSV(Ticket newTicket);
     // bool overwriteAllTicketsToCSV();
 

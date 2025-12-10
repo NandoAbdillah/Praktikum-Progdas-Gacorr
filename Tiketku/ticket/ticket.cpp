@@ -9,9 +9,13 @@ namespace ticket
 {
     Ticket allTickets[100];
     Ticket authTickets[100];
+    Ticket trainTickets[100];
+    Ticket busTickets[100];
 
     int totalTickets = 0;
     int totalAuthTickets = 0;
+    int totalTrainTickets = 0;
+    int totalBusTickets = 0;
 
     bool appendTicketToCSV(ticket::Ticket newTicket)
     {
@@ -75,6 +79,40 @@ namespace ticket
         totalTickets = count;
 
         file.close();
+
+        return true;
+    }
+
+    bool loadTrainTickets()
+    {
+        int count = 0;
+        for (int i = 0; i < totalTickets; i++)
+        {
+            if (allTickets[i].tipe_kendaraan == "Kereta Api")
+            {
+                trainTickets[i] = allTickets[i];
+                count++;
+            }
+        }
+
+        totalTrainTickets = count;
+
+        return true;
+    }
+
+    bool loadBusTickets()
+    {
+        int count = 0;
+        for (int i = 0; i < totalTickets; i++)
+        {
+            if (allTickets[i].tipe_kendaraan == "Bus")
+            {
+                busTickets[i] = allTickets[i];
+                count++;
+            }
+        }
+
+        totalBusTickets = count;
 
         return true;
     }
