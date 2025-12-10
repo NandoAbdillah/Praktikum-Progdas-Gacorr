@@ -237,8 +237,7 @@ namespace menu_admin
         cout << "1. Lihat Data User " << endl;
         cout << "2. Lihat Data Tiket " << endl;
         cout << "3. Tambahkan Jadwal " << endl;
-        cout << "4. Ubah tarif kendaraan " << endl;
-        cout << "5. Logout " << endl;
+        cout << "4. Logout " << endl;
 
         cout << "Pilih opsi: ";
 
