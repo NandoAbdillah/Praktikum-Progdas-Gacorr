@@ -52,7 +52,8 @@ Admin memiliki fitur manajerial:
 
 ---
 
-### ▶️ **Menjalankan Program**
+## ▶️ **Menjalankan Program**
+
  * cd Tiketku
  * g++ main.cpp auth/login.cpp auth/register.cpp utils/helper.cpp user/user.cpp menu/menu_general.cpp ticket/ticket.cpp menu/menu_user.cpp menu/menu_admin.cpp transport/transport.cpp auth/forgot_password.cpp -o main
  * ./main
