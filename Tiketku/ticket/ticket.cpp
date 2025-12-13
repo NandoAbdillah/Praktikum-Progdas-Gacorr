@@ -79,6 +79,8 @@ namespace ticket
         totalTickets = count;
 
         file.close();
+        loadTrainTickets();
+        loadBusTickets();
 
         return true;
     }

@@ -55,6 +55,7 @@ namespace transport
     bool appendTrainScheduleToCSV(TrainSchedule newTrainSchedule);
     bool appendBusScheduleToCSV(BusSchedule newBusSchedule);
     bool overwriteAllTrainScheduleToCSV();
+    bool overwriteAllBusScheduleToCSV();
 
 }
 
