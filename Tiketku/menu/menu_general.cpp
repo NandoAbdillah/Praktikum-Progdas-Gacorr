@@ -7,7 +7,7 @@
 #include "../auth/forgot_password.h"
 
 using namespace std;
-using namespace global;
+using namespace user;
 using namespace auth;
 
 namespace general
@@ -22,7 +22,7 @@ namespace general
     void loginScreen()
     {
 
-        global::User userLogin;
+        user::User userLogin;
 
         cout << "\n=== LOGIN TIKETKU ===" << endl;
         while (true)
@@ -61,7 +61,7 @@ namespace general
             if (auth::loginUser(&userLogin))
             {
 
-                global::isLoggedIn = true;
+                user::isLoggedIn = true;
                 cout << "Selamat datang, " << authUser.nama_lengkap << "!" << endl;
                 break;
             }
@@ -108,7 +108,7 @@ namespace general
     }
     void registerScreen()
     {
-        global::User userRegister;
+        user::User userRegister;
 
         cout << "=== REGISTRASI PENGGUNA BARU ===" << endl;
 
@@ -151,7 +151,7 @@ namespace general
             if (auth::registerUser(&userRegister))
             {
 
-                global::isLoggedIn = true;
+                user::isLoggedIn = true;
                 cout << "Selamat datang, " << authUser.nama_lengkap << "!" << endl;
                 break;
             }

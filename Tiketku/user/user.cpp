@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-namespace global
+namespace user
 {
     User allUsers[MAX_USER_CACHE];
     User authUser;
@@ -50,9 +50,9 @@ namespace global
             return false;
         }
 
-        for (int i = 0; i < global::totalUsers; i++)
+        for (int i = 0; i < user::totalUsers; i++)
         {
-            file << global::allUsers[i].id << "," << global::allUsers[i].username << "," << global::allUsers[i].password << "," << global::allUsers[i].nama_lengkap << "," << global::allUsers[i].email << "," << global::allUsers[i].no_telp << "," << global::allUsers[i].role << "," << global::allUsers[i].saldo << endl;
+            file << user::allUsers[i].id << "," << user::allUsers[i].username << "," << user::allUsers[i].password << "," << user::allUsers[i].nama_lengkap << "," << user::allUsers[i].email << "," << user::allUsers[i].no_telp << "," << user::allUsers[i].role << "," << user::allUsers[i].saldo << endl;
         }
 
         file.close();
@@ -108,7 +108,7 @@ namespace global
             {
                 if (allUsers[i].username == usernameSession)
                 {
-                    global::authUser = global::allUsers[i];
+                    user::authUser = user::allUsers[i];
                     isLoggedIn = true;
                     file.close();
 

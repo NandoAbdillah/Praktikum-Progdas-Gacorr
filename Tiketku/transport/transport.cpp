@@ -117,7 +117,7 @@ namespace transport
 
     bool overwriteAllTrainScheduleToCSV()
     {
-        ofstream file("./database/schedule_train.csv");
+        ofstream file(DB_KERETA);
 
         if (!file.is_open())
         {
@@ -170,7 +170,7 @@ namespace transport
 
     bool overwriteAllBusScheduleToCSV()
     {
-        ofstream file("./database/schedule_bus.csv");
+        ofstream file(DB_BUS);
 
         if (!file.is_open())
         {

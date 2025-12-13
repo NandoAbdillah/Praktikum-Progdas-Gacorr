@@ -20,8 +20,8 @@ bool initData()
 {
     cout << "=== MEMUAT DATA APLIKASI ===" << endl;
 
-    bool usersLoaded = global::loadUsers();
-    bool authUserLoaded = global::loadAuthUser();
+    bool usersLoaded = user::loadUsers();
+    bool authUserLoaded = user::loadAuthUser();
     bool transportLoaded = transport::loadTransportData();
     bool ticketsLoaded = ticket::loadTickets();
     bool authTicketsLoaded = ticket::loadAuthTickets();
@@ -52,8 +52,8 @@ int main()
 
     general::clearScreen();
 
-    if(global::isLoggedIn) {
-        cout << "[SUKSES] Selamat datang kembali, " << global::authUser.nama_lengkap << "!" << endl;
+    if(user::isLoggedIn) {
+        cout << "[SUKSES] Selamat datang kembali, " << user::authUser.nama_lengkap << "!" << endl;
 
     }
 
@@ -61,18 +61,18 @@ int main()
 
     while (true)
     {
-        if(!global::isLoggedIn) {
+        if(!user::isLoggedIn) {
             general::authScreen();
 
         } else {
             // cout << "dah login " << endl;
-            if(global::authUser.role == "admin") {
+            if(user::authUser.role == "admin") {
                 menu_admin::adminMenu();
             } else {
                 menu_user::userMenu();
             }
 
-            if(global::authUser.username == "") {
+            if(user::authUser.username == "") {
                 isLoggedIn = false;
             }
         }
