@@ -151,7 +151,7 @@ namespace transport
                  << newBusSchedule.kode_rute << ","
                  << newBusSchedule.nama_bus << ","
                  << newBusSchedule.terminal_asal << ","
-                 << newBusSchedule.terminal_asal << ","
+                 << newBusSchedule.terminal_tujuan << ","
                  << newBusSchedule.jam_berangkat << ","
                  << newBusSchedule.estimasi_tiba << endl;
 
@@ -183,7 +183,7 @@ namespace transport
                  << allBusSchedules[i].kode_rute << ","
                  << allBusSchedules[i].nama_bus << ","
                  << allBusSchedules[i].terminal_asal << ","
-                 << allBusSchedules[i].terminal_asal << ","
+                 << allBusSchedules[i].terminal_tujuan << ","
                  << allBusSchedules[i].jam_berangkat << ","
                  << allBusSchedules[i].estimasi_tiba << endl;
         }
