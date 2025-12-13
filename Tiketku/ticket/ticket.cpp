@@ -122,7 +122,7 @@ namespace ticket
         int count = 0;
         for (int i = 0; i < totalTickets; i++)
         {
-            if (allTickets[i].id_user == global::authUser.id)
+            if (allTickets[i].id_user == user::authUser.id)
             {
                 authTickets[i] = allTickets[i];
                 count++;

@@ -5,7 +5,7 @@
 #include "../user/user.h"
 
 using namespace std;
-using namespace global;
+using namespace user;
 using namespace helper;
 
 namespace auth
@@ -25,8 +25,8 @@ namespace auth
     void logout()
     {
 
-        global::isLoggedIn = false;
-        global::authUser = User();
+        user::isLoggedIn = false;
+        user::authUser = User();
         ofstream file(FILE_SESSION, ios::trunc);
         file.close();
     }
@@ -43,7 +43,7 @@ namespace auth
                 if (dbPassDec == userLogin->password)
                 {
                     authUser = allUsers[i];
-                    global::indexAuthUser = i;
+                    user::indexAuthUser = i;
                     saveSession(userLogin->username);
                     cout << "[SUKSES] Selamat datang, " << userLogin->nama_lengkap << "!" << endl;
                     return true;

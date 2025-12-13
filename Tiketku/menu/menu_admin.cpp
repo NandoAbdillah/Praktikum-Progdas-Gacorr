@@ -30,13 +30,13 @@ namespace menu_admin
         cout << "+----------------------+-----------------+--------------------------------+-----------------+-----------------+\n";
 
         // Loop data user
-        for (int i = 0; i < global::totalUsers; i++)
+        for (int i = 0; i < user::totalUsers; i++)
         {
 
-            cout << "| " << helper::padRight(global::allUsers[i].nama_lengkap, wNama)
-                 << " | " << helper::padRight(global::allUsers[i].username, wUsername)
-                 << " | " << helper::padRight(global::allUsers[i].email, wEmail)
-                 << " | " << helper::padRight(global::allUsers[i].no_telp, wTelepon)
+            cout << "| " << helper::padRight(user::allUsers[i].nama_lengkap, wNama)
+                 << " | " << helper::padRight(user::allUsers[i].username, wUsername)
+                 << " | " << helper::padRight(user::allUsers[i].email, wEmail)
+                 << " | " << helper::padRight(user::allUsers[i].no_telp, wTelepon)
                  << " |\n";
         }
 

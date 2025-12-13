@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace global
+namespace user
 {
     struct User
     {

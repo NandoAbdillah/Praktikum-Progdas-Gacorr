@@ -210,7 +210,7 @@ namespace menu_user
         // finalisasi
         ticket::Ticket tiketBaru;
         tiketBaru.id_tiket = helper::generateIDTiket();
-        tiketBaru.id_user = global::authUser.id;
+        tiketBaru.id_user = user::authUser.id;
         tiketBaru.tipe_kendaraan = "Kereta Api";
         tiketBaru.asal = jadwalTerpilih.stasiun_asal;
         tiketBaru.tujuan = jadwalTerpilih.stasiun_tujuan;
@@ -428,7 +428,7 @@ namespace menu_user
         // finalisasi
         ticket::Ticket tiketBaru;
         tiketBaru.id_tiket = helper::generateIDTiket();
-        tiketBaru.id_user = global::authUser.id;
+        tiketBaru.id_user = user::authUser.id;
         tiketBaru.tipe_kendaraan = "Bus";
         tiketBaru.asal = jadwalTerpilih.terminal_asal;
         tiketBaru.tujuan = jadwalTerpilih.terminal_tujuan;
@@ -605,7 +605,7 @@ namespace menu_user
         cout << "|         GANTI PASSWORD          |" << endl;
         cout << "+---------------------------------+" << endl;
 
-        if (auth::forgotPassword(global::authUser.username))
+        if (auth::forgotPassword(user::authUser.username))
         {
             cout << "[SUKSES] Password berhasil diubah." << endl;
         }
@@ -647,10 +647,10 @@ namespace menu_user
             }
             else
             {
-                global::authUser.username = usernameBaru;
-                global::allUsers[global::indexAuthUser].username = usernameBaru;
+                user::authUser.username = usernameBaru;
+                user::allUsers[user::indexAuthUser].username = usernameBaru;
 
-                if (global::overwriteAllUsersToCSV())
+                if (user::overwriteAllUsersToCSV())
                     cout << "[OK] Username berhasil diubah." << endl;
                 else
                     cout << "[Error] Gagal mengubah Username." << endl;
@@ -663,10 +663,10 @@ namespace menu_user
             cout << "Masukkan Nama Lengkap baru: ";
             getline(cin, namaBaru);
 
-            global::authUser.nama_lengkap = namaBaru;
-            global::allUsers[global::indexAuthUser].nama_lengkap = namaBaru;
+            user::authUser.nama_lengkap = namaBaru;
+            user::allUsers[user::indexAuthUser].nama_lengkap = namaBaru;
 
-            if (global::overwriteAllUsersToCSV())
+            if (user::overwriteAllUsersToCSV())
                 cout << "[OK] Nama Lengkap berhasil diubah." << endl;
             else
                 cout << "[Error] Gagal mengubah Nama Lengkap." << endl;
@@ -686,10 +686,10 @@ namespace menu_user
             }
             else
             {
-                global::authUser.email = emailBaru;
-                global::allUsers[global::indexAuthUser].email = emailBaru;
+                user::authUser.email = emailBaru;
+                user::allUsers[user::indexAuthUser].email = emailBaru;
 
-                if (global::overwriteAllUsersToCSV())
+                if (user::overwriteAllUsersToCSV())
                     cout << "[OK] Email berhasil diubah." << endl;
                 else
                     cout << "[Error] Gagal mengubah Email." << endl;
@@ -710,10 +710,10 @@ namespace menu_user
             }
             else
             {
-                global::authUser.no_telp = noTelpBaru;
-                global::allUsers[global::indexAuthUser].no_telp = noTelpBaru;
+                user::authUser.no_telp = noTelpBaru;
+                user::allUsers[user::indexAuthUser].no_telp = noTelpBaru;
 
-                if (global::overwriteAllUsersToCSV())
+                if (user::overwriteAllUsersToCSV())
                     cout << "[OK] Nomor Telepon berhasil diubah." << endl;
                 else
                     cout << "[Error] Gagal mengubah Nomor Telepon." << endl;
@@ -733,10 +733,10 @@ namespace menu_user
         cout << "\n+=============================================+" << endl;
         cout << "|               PROFIL PENGGUNA               |" << endl;
         cout << "+=============================================+" << endl;
-        cout << "| " << helper::padRight("Username : " + global::authUser.username, wContent) << " |" << endl;
-        cout << "| " << helper::padRight("Nama     : " + global::authUser.nama_lengkap, wContent) << " |" << endl;
-        cout << "| " << helper::padRight("Email    : " + global::authUser.email, wContent) << " |" << endl;
-        cout << "| " << helper::padRight("No HP    : " + global::authUser.no_telp, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Username : " + user::authUser.username, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Nama     : " + user::authUser.nama_lengkap, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("Email    : " + user::authUser.email, wContent) << " |" << endl;
+        cout << "| " << helper::padRight("No HP    : " + user::authUser.no_telp, wContent) << " |" << endl;
         cout << "+---------------------------------------------+" << endl;
         cout << "| Opsi:                                       |" << endl;
         cout << "| 1. Ubah Profil                              |" << endl;

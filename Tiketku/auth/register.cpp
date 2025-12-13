@@ -9,9 +9,9 @@ namespace auth
 {
     bool isUsernameTaken(string usernameInput)
     {
-        for (int i = 0; i < global::totalUsers; i++)
+        for (int i = 0; i < user::totalUsers; i++)
         {
-            if (global::allUsers[i].username == usernameInput)
+            if (user::allUsers[i].username == usernameInput)
             {
                 return true;
             }
@@ -22,9 +22,9 @@ namespace auth
 
     bool isEmailTaken(string emailInput)
     {
-        for (int i = 0; i < global::totalUsers; i++)
+        for (int i = 0; i < user::totalUsers; i++)
         {
-            if (global::allUsers[i].email == emailInput)
+            if (user::allUsers[i].email == emailInput)
             {
                 return true;
             }
@@ -35,9 +35,9 @@ namespace auth
 
     bool isNoTelpTaken(string no_telpInput)
     {
-        for (int i = 0; i < global::totalUsers; i++)
+        for (int i = 0; i < user::totalUsers; i++)
         {
-            if (global::allUsers[i].no_telp == no_telpInput)
+            if (user::allUsers[i].no_telp == no_telpInput)
             {
                 return true;
             }
@@ -46,18 +46,18 @@ namespace auth
         return false;
     }
 
-    bool registerUser(global::User *userRegister)
+    bool registerUser(user::User *userRegister)
     {
 
         userRegister->password = helper::simpleEncrypt(userRegister->password);
 
-        helper::generateUserID(global::totalUsers, &userRegister->id);
+        helper::generateUserID(user::totalUsers, &userRegister->id);
 
-        if (global::appendUserToCSV(*userRegister))
+        if (user::appendUserToCSV(*userRegister))
         {
-            global::allUsers[global::totalUsers] = *userRegister;
-            global::totalUsers++;
-            global::authUser = *userRegister;
+            user::allUsers[user::totalUsers] = *userRegister;
+            user::totalUsers++;
+            user::authUser = *userRegister;
 
             cout << "[SUKSES] Registrasi berhasil! Silakan login dengan akun Anda." << endl;
             return true;

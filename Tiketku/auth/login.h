@@ -5,7 +5,7 @@
 #include <string>
 
 
-using namespace global;
+using namespace user;
 
 
 namespace auth

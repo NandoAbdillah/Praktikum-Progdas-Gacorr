@@ -12,10 +12,10 @@ namespace auth
     {
 
         bool userFound = false;
-        for (int i = 0; i < global::totalUsers; i++)
+        for (int i = 0; i < user::totalUsers; i++)
         {
 
-            if (global::allUsers[i].username == usernameInput)
+            if (user::allUsers[i].username == usernameInput)
             {
 
                 userFound = true;
@@ -26,9 +26,9 @@ namespace auth
                 cout << "Masukkan password baru: ";
                 cin >> newPassword;
 
-                global::allUsers[i].password = helper::simpleEncrypt(newPassword);
+                user::allUsers[i].password = helper::simpleEncrypt(newPassword);
 
-                if (global::overwriteAllUsersToCSV())
+                if (user::overwriteAllUsersToCSV())
                 {
 
                     return true;
