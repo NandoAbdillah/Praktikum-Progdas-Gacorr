@@ -30,7 +30,7 @@ namespace general
 
             string username, password;
             cout << "Tulis 'back' pada username untuk kembali ke menu sebelumnya." << endl;
-            cout << "Tulis 'forgot' pada password untuk lupa password dan reset passwordnya"<< endl;
+            cout << "Tulis 'forgot' pada password untuk lupa password dan reset passwordnya" << endl;
             cout << "Username: ";
             cin >> username;
 
@@ -184,11 +184,10 @@ namespace general
             registerScreen();
             break;
 
-        case 3:
-            break;
-
         default:
+            return;
             break;
         }
     }
+
 }

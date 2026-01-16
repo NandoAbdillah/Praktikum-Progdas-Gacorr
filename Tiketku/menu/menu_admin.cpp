@@ -5,6 +5,7 @@
 #include "./menu_admin.h"
 #include "../transport/transport.h"
 #include "../ticket/ticket.h"
+#include "../menu/menu_general.h"
 #include <cstring>
 
 using namespace std;
@@ -249,7 +250,8 @@ namespace menu_admin
         cout << "Pilih opsi: ";
 
         cin >> choice;
-        // cin.ignore();
+        
+        general::clearScreen();
 
         switch (choice)
         {
